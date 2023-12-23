@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button {
+            height: 100px;
+            width: 100px;
+        }
+
+        table {
+            border: solid;
+            border-left: solid;
+            border-right: solid;
+            background-color: bisque;
+            border-color: black;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="header">welcome to tic tac fuck you to!</h1>
+
+    <button id="b0" onclick="makePlay(0)">-</button>
+    <button id="b1" onclick="makePlay(1)">-</button>
+    <button id="b2" onclick="makePlay(2)">-</button><br>
+    <button id="b3" onclick="makePlay(3)">-</button>
+    <button id="b4" onclick="makePlay(4)">-</button>
+    <button id="b5" onclick="makePlay(5)">-</button><br>
+    <button id="b6" onclick="makePlay(6)">-</button>
+    <button id="b7" onclick="makePlay(7)">-</button>
+    <button id="b8" onclick="makePlay(8)">-</button>
+    <br>
+
+    <div id=score_sheet>
+
+
+    </div>
+    its fucking midnight and im building a game yay...
+</body>
+
+
+
+
+<script>
+    const sun = () => {
+        console.log("hello");
+    }
+    scores = []
+    for (let index = 1; index <= 10; index++) {
+        scores.push("-")
+
+    }
+    header.innerHTML = "hello mutherFucker"
+    turn_player = "X"
+    turn_countr = 0
+    winner = ""
+    wins_for_X = 0
+    wins_for_0 = 0
+    ties = 0
+    const board = () => {
+        b0.innerHTML = scores[0]
+        b1.innerHTML = scores[1]
+        b2.innerHTML = scores[2]
+        b3.innerHTML = scores[3]
+        b4.innerHTML = scores[4]
+        b5.innerHTML = scores[5]
+        b6.innerHTML = scores[6]
+        b7.innerHTML = scores[7]
+        b8.innerHTML = scores[8]
+    }
+    console.log(scores);
+    const makePlay = (num) => {
+        if (scores[num] == "-" && winner == "") {
+            turn_countr++
+            scores[num] = turn_player
+            turn_player = turn_player == "X" ? "0" : "X"
+            header.innerHTML = `its the ${turn_player}'s turn to play`
+            board()
+            check_win()
+        }
+
+    }
+    const check_rows = (i) => {
+        if (scores[i] == scores[i + 1] && scores[i + 1] == scores[i + 2] && scores[i] != "-") {
+            winner = scores[i]
+        }
+
+    }
+    const check_clms = (i) => {
+        if (scores[i] == scores[i + 3] && scores[i + 3] == scores[i + 6] && scores[i] != "-") {
+            winner = scores[i]
+        }
+
+    }
+    const check_win = () => {
+        check_rows(0)
+        check_rows(3)
+        check_rows(6)
+        check_clms(0)
+        check_clms(1)
+        check_clms(2)
+        if (scores[0] == scores[4] && scores[4] == scores[8] && scores[0] != "-") {
+            winner = scores[0]
+        }
+        if (scores[2] == scores[4] && scores[4] == scores[6] && scores[2] != "-") {
+            winner = scores[2]
+        }
+        if (turn_countr == 9 && winner == "") {
+            winner = "tie"
+            header.innerHTML = "so close bit it's a tie"
+        }
+
+        header.innerHTML = `the winner is ${winner}`
+        if (winner != "") {
+            console.log(winner);
+            if (winner == "0") {
+                console.log("i am here");
+                wins_for_0++
+            }
+            if (winner == "X") {
+                wins_for_X++
+            }
+            if (winner == "tie"){
+                ties++
+            }
+
+        }
+        update_screen()
+    }
+    
+    const reset = () => {
+        header.innerHTML = "hello mutherFucker"
+        turn_player = "X"
+        turn_countr = 0
+        winner = ""
+        for (let index = 0; index <= 9; index++) {
+            scores[index] = "-"
+        }
+        board()
+    }
+    const update_screen = () => {
+        score_sheet.innerHTML = ` <table>
+            <td>${wins_for_X}</td>
+            <th>wins for X</th>
+            <td>${wins_for_0}</td>
+            <th>wins for O</th>
+            <td>${ties}</td>
+            <th>ties</th>
+            </table><br>
+
+            <button onclick="reset()"> play again </button>`
+
+    }
+
+</script>
+
+</html>
